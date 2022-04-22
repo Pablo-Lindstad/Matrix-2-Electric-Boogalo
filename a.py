@@ -1,40 +1,38 @@
-allPaths = []
-def getPaths(matrix, path, row=0, coloumn=0):
- 
-    # base case
-    if not matrix or not len(matrix):
-        return
- 
+allPaths = [] #Tom liste, som skal ha alle pathene
+def getPaths(matrix, path=[], row=0, coloumn=0): #Funksjon for å finne alle pather fra [0][0] til [-1][-1] i en matrise, tar en liste som input og har også med path, rad og kolumne som brukes til å gjøre den rekursiv, men er satt til null som default, som output gir den en liste med alle pathene i form av "kordinater", altså indexer
+    #Finner antall rader og kolumner
     rows = len(matrix) 
     coloumns = len(matrix[0])
- 
-     # if the last cell is reached, print the route
+    print("START")
+    #Sjekker om vi har nåd enden av matrisen, altså nederste rad og borteste kolumne
     if row == rows - 1 and coloumn == coloumns - 1:
-        global allPaths
-        allPaths.append(path + [matrix[row][coloumn]])
-        return 
+        print("FERDIG")
+        global allPaths #Gjør listen om til en global variabel for å kunne legge til pather fra inni funksjonen
+        allPaths.append(path + [matrix[row][coloumn]]) #Legger til pathen til listen med alle paths, på slutten av pathen legges det siste elementet i matrisen, altså det som har blitt nåd
+        return #Returnerer
 
-    # include the current cell in the path
-    path.append(matrix[row][coloumn])
-    # move right
-    if row < rows-1 and coloumn + 1 < coloumns:
-        print(row,coloumn)
-        getPaths(matrix, path, row, coloumn + 1)
+    path.append(matrix[row][coloumn]) #Legger til posisjonen til pathen
+
+    if row < rows and coloumn + 1 < coloumns: #Sjekker om vi har nåd høyre side av matrisen, ved å se om det er et element til til høyre
+        print ("HØYRE")
+        getPaths(matrix, path, row, coloumn + 1) #Om vi ikke er det kjøres funksjonen rekursivt fra elementet til høyre
  
-    # move down
-    if 0 <= row + 1 < rows and 0 <= coloumn < coloumns:
+    if row + 1 < rows and coloumn < coloumns: #Samme som over, bare nedover, så når den har nåd høyre side av en matrise går den ned en rad og fortsetter
+        print ("NEDE")
         getPaths(matrix, path, row + 1, coloumn)
- 
-    # backtrack: remove the current cell from the path
-    path.pop()
+    
+    print (path)
+    path.pop() #Fjerner siste elementet fra pathen, 
+    print (path)
+    print()
+
 
 
 matrix = [
-    [1, 2, 3,],
+    [1, 2, 3],
     [4, 5, 6],
     [7, 8, 9]
 ]
 
-path = []
-getPaths(matrix, path)
+getPaths(matrix)
 print(allPaths)
