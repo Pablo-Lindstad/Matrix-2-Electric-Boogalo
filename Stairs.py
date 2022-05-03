@@ -23,12 +23,12 @@ Deretter sjekker den om det er et punkt under, om det er det kaller den på funk
 Til slutt så fjerner den objektet fra pathen, dermed kommer den først til å gå helt til høyre og rett ned første som første path, deretter vil den fjerne elementer så den kommer et punkt tilbake og vil da gå ned et punkt fra høyre og etter det til høyre.
 Den fortsetter til den har gått igjennom alle pather og lagt den til i listen.
 
-
+Programmet starter på første raden og skal ned til nederste rad, den gjør det ved å kjøre rekusivt igjennom matrisen for å få hver path, den starter ved å sjekke om den har nåd nederste rad, om den har det legger den pathen til i listen med pather.
+Om den ikke har nåd enden legger den til posisjonen i pathen
+Så sjekker den om det er et element på posisjonen til venstre en rad under, om det er det kjører den koden derifra, deretter gjør den det samme med rett under og under og til venstre
+Til slutt fjerner den posisjonen fra pathen, altså går et skritt tilbake så pathen blir riktig
+Så når koden kjører vil den først gå rett ned, deretter gå ned til nest siste og deretter til høyre og så ned, så til høyre 2 fra bunn osv.
 """
-
-
-
-
 
 
 
@@ -46,7 +46,18 @@ def tuplesToMatrix(tuples): #Funksjon for å gjøre en liste med tuples om til e
             matrix.append(temp) #Legger listen til matrixen
     return (matrix) #Returnerer matrixen
 
-
+liste1 = (0)
+liste2 = (2, 4 )
+liste3 = (0, 5, 6 )
+liste4 = (7, 2, 9, 10 )
+liste5 = (25, 11, 1, 0, 5 )
+liste6 = (1, 88, 51, 88, 61, 4 )
+liste7 = (93, 12, 73, 36, 71, 65, 34 )
+liste8 = (233, 5, 2, 1, 6, 7, 55, 1 )
+liste9 = (16, 111, 213, 9, 23, 433, 1, 34, 13 )
+liste10 =(5, 23, 453, 789, 123, 200, 212, 345, 556, 99 )
+tuples = [liste1, liste2, liste3, liste4, liste5, liste6, liste7, liste8, liste9, liste10]
+matrix = tuplesToMatrix(tuples)
 
 def minSumPath(paths,matrix): #Funksjon for å finne pathen i en liste med pather som har den laveste verdien igjennom en matrise, tar en liste med pather og matrisen den gjelder til som input og gir verdien av den laveste pathen igjennom matrisen som output
     minSum = 0 #Variabel for den minste summen
@@ -71,42 +82,12 @@ def maxSumPath(paths, matrix): #Funksjon for å finne pathen i en liste med path
     return maxSum #Returnerer den største summen
 
 
-def minSum(list): #Funksjon for å finne pathen igjennom en matrise som har lavest "kostnad", tar en matrise som input og gir deg summen på den laveste pathen som output
-    rows = len(list) #Finner antall rader og kolumner
-    coloumns = len(list[0])
-    for row in range(0,rows): #Går over alle radene
-        for coloumn in range(0,coloumns): #Går over alle kollumnene, så den går igjennom kollumnen og når den kommer helt til høyre går den ned en rad
-            if row == 0 and coloumn == 0: #Sjekker om det er første element i matrisen, om det er det gjøres ingenting siden den ikke har noen elementer over eller til venstre
-                pass
-            elif row == 0: #Sjekker om det er første raden, om det er det er det ingen elementer over og vi tar derfor å automatisk legger til tallet til venstre
-                list[row][coloumn] += list[row][coloumn-1]
-            elif coloumn == 0: #Sjekker om det er første kollumnen, om det er det er det ingen elementer til venstre så vi legger på tallet over
-                list[row][coloumn] += list[row-1][coloumn]
-            else: #Om det ikke er i første kollonen eller raden
-                if list[row-1][coloumn] < list[row][coloumn-1]: #Sjekker om elementet over er mindre en det til høyre, om det er det legges det på 
-                    list[row][coloumn] += list[row-1][coloumn]
-                else: #Om ikke legges det andre på
-                    list[row][coloumn] += list[row][coloumn-1]
-    return(list[rows-1][coloumns-1]) #Returnerer siste element
-#Funksjonen vil gå igjennom matrisen kollumne for kollumne og rad for rad og vil velge det tallet som er mindre for å ende opp med den ideele pathen, altså den minste summen i siste element
+def minSum(matrix):
+    rows = len(matrix)
+    for i in range(0,rows):
+        for j in range(0,i+1):
+            print (i,j)
+    return
 
 
-
-
-
-liste1 = (0)
-liste2 = (2, 4 )
-liste3 = (0, 5, 6 )
-liste4 = (7, 2, 9, 10 )
-liste5 = (25, 11, 1, 0, 5 )
-liste6 = (1, 88, 51, 88, 61, 4 )
-liste7 = (93, 12, 73, 36, 71, 65, 34 )
-liste8 = (233, 5, 2, 1, 6, 7, 55, 1 )
-liste9 = (16, 111, 213, 9, 23, 433, 1, 34, 13 )
-liste10 =(5, 23, 453, 789, 123, 200, 212, 345, 556, 99 )
-tuples = [liste1, liste2, liste3, liste4, liste5, liste6, liste7, liste8, liste9, liste10]
-matrix = tuplesToMatrix(tuple)
-
-
-getPaths(matrix)
-print(maxSumPath(allPaths, tuplesToMatrix(tuples)))
+minSum(matrix)
