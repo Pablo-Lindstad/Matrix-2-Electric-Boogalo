@@ -1,3 +1,19 @@
+def tuplesToMatrix(tuples): #Funksjon for å gjøre en liste med tuples om til en matrix, tar en liste med tuples som input og gir en matrix av de samme listene som output.
+    matrix = [] #Ny matrix
+    for tuple in tuples: #Går igjennom hver tuple i listen med tuples
+        try: #Om det er en tuple med flere elementer
+            temp = [] #Ny liste for å sende til matrixen
+            for number in tuple: #Går igjennom hvert tall i tupelen
+                temp.append(number) #Legger til tallet i listen
+            matrix.append(temp) #Legger til listen til matrixen
+        except TypeError: #Om tupelen kun har et element
+            temp = [] #Liste for å sende til matrixen
+            temp.append(tuple) #Legger til elementet til listen
+            matrix.append(temp) #Legger listen til matrixen
+    return (matrix) #Returnerer matrixen
+
+
+
 allPaths = [] #Tom liste, som skal ha alle pathene
 def getPaths(matrix, path=[], row=0, coloumn=0): #Funksjon for å finne alle pather fra [0][0] til nederste rad i en matrise, tar en liste som input og har også med path, rad og kolumne som brukes til å gjøre den rekursiv, men er satt til null som default, som output gir den en liste med alle pathene i form av "kordinater", altså indexer
     #Finner antall rader og kolumner på den raden den er
@@ -32,33 +48,6 @@ Så når koden kjører vil den først gå rett ned, deretter gå ned til nest si
 
 
 
-def tuplesToMatrix(tuples): #Funksjon for å gjøre en liste med tuples om til en matrix, tar en liste med tuples som input og gir en matrix av de samme listene som output.
-    matrix = [] #Ny matrix
-    for tuple in tuples: #Går igjennom hver tuple i listen med tuples
-        try: #Om det er en tuple med flere elementer
-            temp = [] #Ny liste for å sende til matrixen
-            for number in tuple: #Går igjennom hvert tall i tupelen
-                temp.append(number) #Legger til tallet i listen
-            matrix.append(temp) #Legger til listen til matrixen
-        except TypeError: #Om tupelen kun har et element
-            temp = [] #Liste for å sende til matrixen
-            temp.append(tuple) #Legger til elementet til listen
-            matrix.append(temp) #Legger listen til matrixen
-    return (matrix) #Returnerer matrixen
-
-liste1 = (0)
-liste2 = (2, 4 )
-liste3 = (0, 5, 6 )
-liste4 = (7, 2, 9, 10 )
-liste5 = (25, 11, 1, 0, 5 )
-liste6 = (1, 88, 51, 88, 61, 4 )
-liste7 = (93, 12, 73, 36, 71, 65, 34 )
-liste8 = (233, 5, 2, 1, 6, 7, 55, 1 )
-liste9 = (16, 111, 213, 9, 23, 433, 1, 34, 13 )
-liste10 =(5, 23, 453, 789, 123, 200, 212, 345, 556, 99 )
-tuples = [liste1, liste2, liste3, liste4, liste5, liste6, liste7, liste8, liste9, liste10]
-matrix = tuplesToMatrix(tuples)
-
 def minSumPath(paths,matrix): #Funksjon for å finne pathen i en liste med pather som har den laveste verdien igjennom en matrise, tar en liste med pather og matrisen den gjelder til som input og gir verdien av den laveste pathen igjennom matrisen som output
     minSum = 0 #Variabel for den minste summen
     for path in paths: #Går igjennom hver path
@@ -82,12 +71,42 @@ def maxSumPath(paths, matrix): #Funksjon for å finne pathen i en liste med path
     return maxSum #Returnerer den største summen
 
 
-def minSum(matrix):
-    rows = len(matrix)
-    for i in range(0,rows):
-        for j in range(0,i+1):
-            print (i,j)
-    return
+
+def minSum(matrix): #Funksjon for å finne ruten igjennom en matrix med økende lengde på kolonner med laveste sum, tar en matrix som har 1 tall på første rad, 2 på andre osv. som input og gir summen på den pathen som har lavest verdi som output.
+    rows = len(matrix) #Finner antall rader
+    for row in range(0,rows): #Går over hver rad
+        for coloumn in range(0,row+1): #Går over hver kolonne
+            if row == 0: #Sjekker om det er det første elementet
+                pass #Om det er det kan vi fortsette siden det ikke har noen tall over seg
+            elif row == 1 and coloumn == 0: #Sjekker om det er første objektet i andre rad
+                matrix[row][coloumn] += matrix[0][0] #Om det er det kan vi legge på første tallet siden det er det eneste over
+            elif coloumn == 0: #Sjekker om det er første kolonne, så tredje rad og nedover
+                matrix[row][coloumn] += min(matrix[row-1][coloumn], matrix[row-1][coloumn+1]) #Om det er det så velger den fra tallet over og det over og til høyre siden det er alle mulighetene
+            elif coloumn == len(matrix[row])-1: #Sjekker om det er tallet helt ytterst på kolonnen
+                matrix[row][coloumn] += matrix[row-1][coloumn-1] #Om det er det har den kun tallet over til venstre å velge fra
+            elif coloumn == len(matrix[row])-2: #Sjekker om det er tallet nest ytterst på hver kolonne 
+                matrix[row][coloumn] += min(matrix[row-1][coloumn-1],matrix[row-1][coloumn]) #Om det er det har den kun tallet over og over og til venstre å velge mellom
+            else: #Om det er ingen av de andre
+                matrix[row][coloumn] += min(matrix[row-1][coloumn-1], matrix[row-1][coloumn], matrix[row-1][coloumn+1]) #Da har den alle de tre tallene over seg og velger mellom over og til venstre, rett over og over og til høyre
+    return min(matrix[-1]) #Returnerer det minste tallet på den nederste raden
+#Funksjonen vil gå igjennom hver rad og kolonne og finne det valget som er billigst underveis og legge dette til seg selv, ved å gjøre dette finner vi på nederste raden den billigste måten å komme til hver av de stedene på og kan da velge den laveste
 
 
-minSum(matrix)
+def maxSum(matrix): #Funksjon for å finne ruten igjennom en matrix med økende lengde på kolonner med laveste sum, tar en matrix som har 1 tall på første rad, 2 på andre osv. som input og gir summen på den pathen som har størst verdi som output.
+    rows = len(matrix) #Finner antall rader
+    for row in range(0,rows): #Går over hver rad
+        for coloumn in range(0,row+1): #Går over hver kolonne
+            if row == 0: #Sjekker om det er det første elementet
+                pass #Om det er det kan vi fortsette siden det ikke har noen tall over seg
+            elif row == 1 and coloumn == 0: #Sjekker om det er første objektet i andre rad
+                matrix[row][coloumn] += matrix[0][0] #Om det er det kan vi legge på første tallet siden det er det eneste over
+            elif coloumn == 0: #Sjekker om det er første kolonne, så tredje rad og nedover
+                matrix[row][coloumn] += max(matrix[row-1][coloumn], matrix[row-1][coloumn+1]) #Om det er det så velger den fra tallet over og det over og til høyre siden det er alle mulighetene
+            elif coloumn == len(matrix[row])-1: #Sjekker om det er tallet helt ytterst på kolonnen
+                matrix[row][coloumn] += matrix[row-1][coloumn-1] #Om det er det har den kun tallet over til venstre å velge fra
+            elif coloumn == len(matrix[row])-2: #Sjekker om det er tallet nest ytterst på hver kolonne 
+                matrix[row][coloumn] += max(matrix[row-1][coloumn-1],matrix[row-1][coloumn]) #Om det er det har den kun tallet over og over og til venstre å velge mellom
+            else: #Om det er ingen av de andre
+                matrix[row][coloumn] += max(matrix[row-1][coloumn-1], matrix[row-1][coloumn], matrix[row-1][coloumn+1]) #Da har den alle de tre tallene over seg og velger mellom over og til venstre, rett over og over og til høyre
+    return max(matrix[-1]) #Returnerer det største tallet på den nederste raden
+#Funksjonen vil gå igjennom hver rad og kolonne og finne det valget som er dyrest underveis og legge dette til seg selv, ved å gjøre dette finner vi på nederste raden den dyreste måten å komme til hver av de stedene på og kan da velge den høyeste

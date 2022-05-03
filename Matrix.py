@@ -1,45 +1,3 @@
-def minSum(list): #Funksjon for å finne pathen igjennom en matrise som har lavest "kostnad", tar en matrise som input og gir deg summen på den laveste pathen som output
-    rows = len(list) #Finner antall rader og kolumner
-    coloumns = len(list[0])
-    for row in range(0,rows): #Går over alle radene
-        for coloumn in range(0,coloumns): #Går over alle kollumnene, så den går igjennom kollumnen og når den kommer helt til høyre går den ned en rad
-            if row == 0 and coloumn == 0: #Sjekker om det er første element i matrisen, om det er det gjøres ingenting siden den ikke har noen elementer over eller til venstre
-                pass
-            elif row == 0: #Sjekker om det er første raden, om det er det er det ingen elementer over og vi tar derfor å automatisk legger til tallet til venstre
-                list[row][coloumn] += list[row][coloumn-1]
-            elif coloumn == 0: #Sjekker om det er første kollumnen, om det er det er det ingen elementer til venstre så vi legger på tallet over
-                list[row][coloumn] += list[row-1][coloumn]
-            else: #Om det ikke er i første kollonen eller raden
-                if list[row-1][coloumn] < list[row][coloumn-1]: #Sjekker om elementet over er mindre en det til høyre, om det er det legges det på 
-                    list[row][coloumn] += list[row-1][coloumn]
-                else: #Om ikke legges det andre på
-                    list[row][coloumn] += list[row][coloumn-1]
-    return(list[rows-1][coloumns-1]) #Returnerer siste element
-#Funksjonen vil gå igjennom matrisen kollumne for kollumne og rad for rad og vil velge det tallet som er mindre for å ende opp med den ideele pathen, altså den minste summen i siste element
-
-
-
-def maxSum(list): #Funksjon for å finne pathen igjennom en matrise som har høyest "kostnad", tar en matrise som input og gir deg summen på den høyeste pathen som output
-    rows = len(list) #Finner antall rader og kolumner
-    coloumns = len(list[0])
-    for row in range(0,rows): #Går over alle radene
-        for coloumn in range(0,coloumns): #Går over alle kollumnene, så den går igjennom kollumnen og når den kommer helt til høyre går den ned en rad
-            if row == 0 and coloumn == 0: #Sjekker om det er første element i matrisen, om det er det gjøres ingenting siden den ikke har noen elementer over eller til venstre
-                pass
-            elif row == 0: #Sjekker om det er første raden, om det er det er det ingen elementer over og vi tar derfor å automatisk legger til tallet til venstre
-                list[row][coloumn] += list[row][coloumn-1]
-            elif coloumn == 0: #Sjekker om det er første kollumnen, om det er det er det ingen elementer til venstre så vi legger på tallet over
-                list[row][coloumn] += list[row-1][coloumn]
-            else: #Om det ikke er i første kollonen eller raden
-                if list[row-1][coloumn] > list[row][coloumn-1]: #Sjekker om elementet over er større en det til høyre, om det er det legges det på 
-                    list[row][coloumn] += list[row-1][coloumn]
-                else: #Om ikke legges det andre på
-                    list[row][coloumn] += list[row][coloumn-1]
-    return(list[rows-1][coloumns-1]) #Returnerer siste element
-#Funksjonen vil gå igjennom matrisen kollumne for kollumne og rad for rad og vil velge det tallet som er mindre for å ende opp med den ideele pathen, altså den minste summen i siste element
-
-
-
 allPaths = [] #Tom liste, som skal ha alle pathene
 def getPaths(matrix, path=[], row=0, coloumn=0): #Funksjon for å finne alle pather fra [0][0] til [-1][-1] i en matrise, tar en liste som input og har også med path, rad og kolumne som brukes til å gjøre den rekursiv, men er satt til null som default, som output gir den en liste med alle pathene i form av "kordinater", altså indexer
     #Finner antall rader og kolumner
@@ -87,6 +45,50 @@ def maxSumPath(paths, matrix): #Funksjon for å finne pathen i en liste med path
         if sum > maxSum or maxSum == 0: #Sjekker om summen av pathen er større en den største påathen eller om det er den første pathen
             maxSum = sum #Setter summen til maxsummen
     return maxSum #Returnerer den største summen
+
+
+
+def minSum(list): #Funksjon for å finne pathen igjennom en matrise som har lavest "kostnad", tar en matrise som input og gir deg summen på den laveste pathen som output
+    rows = len(list) #Finner antall rader og kolumner
+    coloumns = len(list[0])
+    for row in range(0,rows): #Går over alle radene
+        for coloumn in range(0,coloumns): #Går over alle kollumnene, så den går igjennom kollumnen og når den kommer helt til høyre går den ned en rad
+            if row == 0 and coloumn == 0: #Sjekker om det er første element i matrisen, om det er det gjøres ingenting siden den ikke har noen elementer over eller til venstre
+                pass
+            elif row == 0: #Sjekker om det er første raden, om det er det er det ingen elementer over og vi tar derfor å automatisk legger til tallet til venstre
+                list[row][coloumn] += list[row][coloumn-1]
+            elif coloumn == 0: #Sjekker om det er første kollumnen, om det er det er det ingen elementer til venstre så vi legger på tallet over
+                list[row][coloumn] += list[row-1][coloumn]
+            else: #Om det ikke er i første kollonen eller raden
+                if list[row-1][coloumn] < list[row][coloumn-1]: #Sjekker om elementet over er mindre en det til høyre, om det er det legges det på 
+                    list[row][coloumn] += list[row-1][coloumn]
+                else: #Om ikke legges det andre på
+                    list[row][coloumn] += list[row][coloumn-1]
+    return(list[rows-1][coloumns-1]) #Returnerer siste element
+#Funksjonen vil gå igjennom matrisen kollumne for kollumne og rad for rad og vil velge det tallet som er mindre for å ende opp med den ideele pathen, altså den minste summen i siste element
+
+
+
+def maxSum(list): #Funksjon for å finne pathen igjennom en matrise som har høyest "kostnad", tar en matrise som input og gir deg summen på den høyeste pathen som output
+    rows = len(list) #Finner antall rader og kolumner
+    coloumns = len(list[0])
+    for row in range(0,rows): #Går over alle radene
+        for coloumn in range(0,coloumns): #Går over alle kollumnene, så den går igjennom kollumnen og når den kommer helt til høyre går den ned en rad
+            if row == 0 and coloumn == 0: #Sjekker om det er første element i matrisen, om det er det gjøres ingenting siden den ikke har noen elementer over eller til venstre
+                pass
+            elif row == 0: #Sjekker om det er første raden, om det er det er det ingen elementer over og vi tar derfor å automatisk legger til tallet til venstre
+                list[row][coloumn] += list[row][coloumn-1]
+            elif coloumn == 0: #Sjekker om det er første kollumnen, om det er det er det ingen elementer til venstre så vi legger på tallet over
+                list[row][coloumn] += list[row-1][coloumn]
+            else: #Om det ikke er i første kollonen eller raden
+                if list[row-1][coloumn] > list[row][coloumn-1]: #Sjekker om elementet over er større en det til høyre, om det er det legges det på 
+                    list[row][coloumn] += list[row-1][coloumn]
+                else: #Om ikke legges det andre på
+                    list[row][coloumn] += list[row][coloumn-1]
+    return(list[rows-1][coloumns-1]) #Returnerer siste element
+#Funksjonen vil gå igjennom matrisen kollumne for kollumne og rad for rad og vil velge det tallet som er mindre for å ende opp med den ideele pathen, altså den minste summen i siste element
+
+
 
 """
 Min
