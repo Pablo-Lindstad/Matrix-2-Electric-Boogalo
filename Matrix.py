@@ -50,15 +50,11 @@ def getPaths(matrix, path=[], row=0, coloumn=0): #Funksjon for å finne alle pat
         global allPaths #Gjør listen om til en global variabel for å kunne legge til pather fra inni funksjonen
         allPaths.append(path + [[row, coloumn]]) #Legger til pathen til listen med alle paths, på slutten av pathen legges det siste elementet i matrisen, altså det som har blitt nåd
         return #Returnerer
-
     path.append([row, coloumn]) #Legger til posisjonen til pathen
-
     if row < rows and coloumn + 1 < coloumns: #Sjekker om vi har nåd høyre side av matrisen, ved å se om det er et element til til høyre
         getPaths(matrix, path, row, coloumn + 1) #Om vi ikke er det kjøres funksjonen rekursivt fra elementet til høyre
- 
     if row + 1 < rows and coloumn < coloumns: #Samme som over, bare nedover, så når den har nåd høyre side av en matrise går den ned en rad og fortsetter
         getPaths(matrix, path, row + 1, coloumn)
-    
     path.pop() #Fjerner siste elementet fra pathen
 """
 Koden starter øverst i venstre hjørne og skal nederst til venstre, den gjør det ved å rekursivt gå igjennom matrisen for å få hver path, den starter ved å sjekke om den har nåd enden av matrisen, om den har det legger den pathen til i en liste med alle pather.
@@ -71,23 +67,41 @@ Den fortsetter til den har gått igjennom alle pather og lagt den til i listen.
 
 
 def minSumPath(paths,matrix): #Funksjon for å finne pathen i en liste med pather som har den laveste verdien igjennom en matrise, tar en liste med pather og matrisen den gjelder til som input og gir verdien av den laveste pathen igjennom matrisen som output
-    minSum = 0
-    for path in paths:
-        sum = 0
-        for coordinate in path:
-            sum += matrix[coordinate[0]][coordinate[1]]
-        if sum < minSum or minSum == 0:
-            minSum = sum
-    return minSum
+    minSum = 0 #Variabel for den minste summen
+    for path in paths: #Går igjennom hver path
+        sum = 0 #Sum av denn pathen
+        for coordinate in path: #Går igjennom hver kordinat i pathen
+            sum += matrix[coordinate[0]][coordinate[1]] #Legger til verdien av kordinaten til pathen
+        if sum < minSum or minSum == 0: #Sjekker om summen av pathen er mindre en den minste summen eller om det er den første pathen
+            minSum = sum #Om det er det blir det den nye minste pathen
+    return minSum #Returnerer den minste pathen
 
 
 
-def maxSumPath(paths, matrix):
-    maxSum = 0
-    for path in paths:
-        sum = 0
-        for coordinate in path:
-            sum += matrix[coordinate[0]][coordinate[1]]
-        if sum > maxSum or maxSum == 0:
-            maxSum = sum
-    return maxSum
+def maxSumPath(paths, matrix): #Funksjon for å finne pathen i en liste med pather som har den høyeste verdien igjennom en matrise, tar en liste med pather og matrisen den gjelder til som input og gir verdien av den høyeste pathen igjennom matrisen som output
+    maxSum = 0 #Variabel for den største summen
+    for path in paths: #Går igjennom hver path
+        sum = 0 #Sum av denne pathen
+        for coordinate in path: #Går igjennom hver koordinat i pathen
+            sum += matrix[coordinate[0]][coordinate[1]] #Legger til verdien av kordinaten til summen
+        if sum > maxSum or maxSum == 0: #Sjekker om summen av pathen er større en den største påathen eller om det er den første pathen
+            maxSum = sum #Setter summen til maxsummen
+    return maxSum #Returnerer den største summen
+
+"""
+Min
+5445
+6012
+7143
+6566
+6393
+5390
+
+Max
+12052
+13721
+13248
+12761
+12582
+11824
+"""
