@@ -92,6 +92,7 @@ def minSum(matrix): #Funksjon for å finne ruten igjennom en matrix med økende 
 #Funksjonen vil gå igjennom hver rad og kolonne og finne det valget som er billigst underveis og legge dette til seg selv, ved å gjøre dette finner vi på nederste raden den billigste måten å komme til hver av de stedene på og kan da velge den laveste
 
 
+
 def maxSum(matrix): #Funksjon for å finne ruten igjennom en matrix med økende lengde på kolonner med laveste sum, tar en matrix som har 1 tall på første rad, 2 på andre osv. som input og gir summen på den pathen som har størst verdi som output.
     rows = len(matrix) #Finner antall rader
     for row in range(0,rows): #Går over hver rad
